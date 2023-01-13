@@ -9,7 +9,8 @@ public class Fragmentation : MonoBehaviour
     Collider[] colliders;
     Vector3 fragmentationPos;
     Vector3 cubesPivot;
-    
+
+    bool fragmentationBool = true;
 
     float cubesPivotDistance;
     public float cubeSize = 0.2f;
@@ -31,9 +32,10 @@ public class Fragmentation : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Floor")
+        if (collision.gameObject.name == "Floor" && fragmentationBool==true)
         {
             FragmentationCube();
+            fragmentationBool= false;
         }
     }
 
@@ -67,6 +69,7 @@ public class Fragmentation : MonoBehaviour
     void CreatePiece(int x, int y, int z)
     {
         piece = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        piece.gameObject.tag = "LittleBox";
         piece.transform.position = transform.position + new Vector3(cubeSize * x, cubeSize * y, cubeSize * z) - cubesPivot + new Vector3(0, 0.5f, 0);
         piece.transform.localScale = new Vector3(cubeSize, cubeSize, cubeSize);
         piece.AddComponent<Rigidbody>();

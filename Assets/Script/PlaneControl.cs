@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlaneControl : MonoBehaviour
 {
     
     void Start()
@@ -15,6 +15,4 @@ public class PlayerController : MonoBehaviour
     {
         
     }
-
-    
 }

@@ -15,6 +15,7 @@ public class PlayerMoveControl : MonoBehaviour
     
     void FixedUpdate()
     {
+        
         if (Input.GetMouseButton(0))
         {
             MouseControl();
@@ -30,7 +31,7 @@ public class PlayerMoveControl : MonoBehaviour
         Vector3 vec = new Vector3(horizontal, 0, vertical);
         vec = transform.TransformDirection(vec);
         vec.Normalize();
-        transform.position += vec * Time.deltaTime * 10f;
+        transform.position += vec * Time.deltaTime * 5f;
         
         
     }
@@ -41,7 +42,7 @@ public class PlayerMoveControl : MonoBehaviour
 
         Vector3 distance = transform.position - mousePos;
         distance.y = 0;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(distance), 0.3f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(distance), 0.5f);
 
     }
 }
