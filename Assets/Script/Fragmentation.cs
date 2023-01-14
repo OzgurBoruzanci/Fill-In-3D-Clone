@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Fragmentation : MonoBehaviour
 {
+    List<GameObject> pieceList;
+    List<GameObject> pieceSetActiveFalseList;
     GameObject piece;
     Rigidbody rb;
     Collider[] colliders;
@@ -19,8 +21,30 @@ public class Fragmentation : MonoBehaviour
     public float fragmentationUpward = 0.4f;
     public int cubesInRow = 5;
 
+
+    private void OnEnable()
+    {
+        EventManager.FnishControl += FnishControl;
+    }
+    private void OnDisable()
+    {
+        EventManager.FnishControl -= FnishControl;
+    }
+    void FnishControl()
+    {
+        //this.transform.position = new Vector3(0, 0.1f, 12);
+        //this.gameObject.SetActive(true);
+        pieceSetActiveFalseList.Add(piece.gameObject);
+        if (pieceList.Count == pieceSetActiveFalseList.Count)
+        {
+            this.transform.position = new Vector3(0, 0.1f, 12);
+            this.gameObject.SetActive(true);
+        }
+    }
+
     void Start()
     {
+        pieceList= new List<GameObject>();
         cubesPivotDistance = cubeSize * cubesInRow / 2;
         cubesPivot = new Vector3(cubesPivotDistance, cubesPivotDistance, cubesPivotDistance);
     }
@@ -69,11 +93,12 @@ public class Fragmentation : MonoBehaviour
     void CreatePiece(int x, int y, int z)
     {
         piece = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        piece.gameObject.tag = "LittleBox";
         piece.transform.position = transform.position + new Vector3(cubeSize * x, cubeSize * y, cubeSize * z) - cubesPivot + new Vector3(0, 0.5f, 0);
         piece.transform.localScale = new Vector3(cubeSize, cubeSize, cubeSize);
+        piece.AddComponent<SmallBox>();
         piece.AddComponent<Rigidbody>();
         piece.GetComponent<Rigidbody>().mass = cubeSize;
+        pieceList.Add(piece.gameObject);
     }
 
 }
