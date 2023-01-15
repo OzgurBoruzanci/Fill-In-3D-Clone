@@ -4,7 +4,5 @@ using UnityEngine;
 
 public static class EventManager
 {
-
-    public static Action<int> UpgradeButtonClicked;
-    public static Action FnishControl;
+    public static Action FinishControl;
 }

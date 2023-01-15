@@ -6,21 +6,22 @@ public class SmallBox : MonoBehaviour
 {
     bool setActiveBool = true;
 
-    private void OnEnable()
-    {
-        EventManager.FnishControl += FnishControl;
-    }
-    private void OnDisable()
-    {
-        EventManager.FnishControl -= FnishControl;
-    }
-    void FnishControl()
-    {
-        if (setActiveBool==false)
-        {
-            this.gameObject.SetActive(false);
-        }
-    }
+    //private void OnEnable()
+    //{
+    //    EventManager.FinishControl += FinishControla;
+    //}
+    //private void OnDisable()
+    //{
+    //    EventManager.FinishControl -= FinishControla;
+    //}
+    //void FinishControla()
+    //{
+    //    if (setActiveBool == false)
+    //    {
+    //        this.gameObject.SetActive(false);
+
+    //    }
+    //}
 
     void Start()
     {
@@ -38,7 +39,16 @@ public class SmallBox : MonoBehaviour
         if (collision.gameObject.tag== "Accumulation")
         {
             setActiveBool= false;
-            EventManager.FnishControl();
+            SmallBoxControl();
+            //EventManager.FinishControl();
+        }
+    }
+    void SmallBoxControl()
+    {
+        if (setActiveBool == false)
+        {
+            this.gameObject.SetActive(false);
+
         }
     }
 

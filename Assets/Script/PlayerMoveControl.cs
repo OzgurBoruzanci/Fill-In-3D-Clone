@@ -6,7 +6,6 @@ public class PlayerMoveControl : MonoBehaviour
 {
     float horizontal = 0;
     float vertical = 0;
-
     void Start()
     {
         
@@ -22,6 +21,10 @@ public class PlayerMoveControl : MonoBehaviour
             PlayerRotation();
         }
         //PlayerRotation();
+    }
+    private void LateUpdate()
+    {
+        MoveControl();
     }
 
     void MouseControl()
@@ -44,5 +47,13 @@ public class PlayerMoveControl : MonoBehaviour
         distance.y = 0;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(distance), 0.5f);
 
+    }
+    void MoveControl()
+    {
+        Vector3 viewPos = transform.position;
+        viewPos.x = Mathf.Clamp(viewPos.x, (-3.7f), 3.7f);
+        viewPos.z = Mathf.Clamp(viewPos.z, (-4.65f), 13.6f);
+        viewPos.y = Mathf.Clamp(viewPos.y, 0, 0);
+        transform.position = viewPos;
     }
 }
