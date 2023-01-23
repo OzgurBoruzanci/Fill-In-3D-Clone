@@ -28,9 +28,10 @@ public class AccumulationareaControl : MonoBehaviour
 
     void Update()
     {
-        if (pieceList.Count==125)
+        if (pieceList.Count==8)
         {
             EventManager.FinishControl();
+            Debug.Log("ggg");
         }
     }
 
