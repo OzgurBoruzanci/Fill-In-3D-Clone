@@ -622,7 +622,6 @@ GameObject:
   - component: {fileID: 1596191818411889615}
   - component: {fileID: 4486520415650448793}
   - component: {fileID: 352538362714395069}
-  - component: {fileID: 8167336181138346750}
   m_Layer: 0
   m_Name: Floor (4)
   m_TagString: Accumulation
@@ -707,20 +706,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &8167336181138346750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6547113311887072016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c309ac91c38166a429fc1a1850da9969, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cubeSize: 0.2
-  cubesInRow: 5
 --- !u!1 &6590138988755427765
 GameObject:
   m_ObjectHideFlags: 0

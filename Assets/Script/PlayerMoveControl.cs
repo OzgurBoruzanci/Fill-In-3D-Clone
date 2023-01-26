@@ -7,17 +7,18 @@ public class PlayerMoveControl : MonoBehaviour
 {
     float horizontal = 0;
     float vertical = 0;
-    GameObject mousePosition;
-    Vector3 mouseWorldPosition;
+    public GameObject movementObject;
+    //GameObject mousePosition;
+    //Vector3 mouseWorldPosition;
 
-    Transform destination;
+    //Transform destination;
 
     void Start()
     {
-        mousePosition = new GameObject("MousePosition");
-        mousePosition.transform.position= new Vector3(transform.position.x,0,transform.position.z+2);
+        //mousePosition = new GameObject("MousePosition");
+        //mousePosition.transform.position= new Vector3(transform.position.x,0,transform.position.z+2);
         
-        
+
     }
 
     
@@ -25,10 +26,9 @@ public class PlayerMoveControl : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            
-
             MouseControl();
         }
+        transform.LookAt(movementObject.transform);
     }
     private void LateUpdate()
     {
@@ -41,18 +41,18 @@ public class PlayerMoveControl : MonoBehaviour
         horizontal = Input.GetAxis("Mouse X");
         vertical = Input.GetAxis("Mouse Y");
         Vector3 movementDirection = new Vector3(horizontal, 0, vertical);
-        //movementDirection = transform.TransformDirection(movementDirection);
         movementDirection.Normalize();
-        //transform.position += movementDirection * Time.deltaTime * 5f;
         transform.Translate(movementDirection * 5 * Time.deltaTime, Space.World);
-        mousePosition.transform.Translate(movementDirection * 20 * Time.deltaTime, Space.World);
+        
+        //mousePosition.transform.Translate(movementDirection * 20 * Time.deltaTime, Space.World);
 
-        if (movementDirection != Vector3.zero)
-        {
-            Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
-            mousePosition.transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720 * Time.deltaTime);
-        }
-        transform.LookAt(mousePosition.transform);
+        //if (movementDirection != Vector3.zero)
+        //{
+        //    Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+        //    mousePosition.transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720 * Time.deltaTime);
+        //}
+
+        //transform.LookAt(movementObject.transform);
 
 
     }
@@ -67,10 +67,10 @@ public class PlayerMoveControl : MonoBehaviour
     }
     void MousePosMoveControl()
     {
-        Vector3 viewPosMouse = mousePosition.transform.position;
-        viewPosMouse.x = Mathf.Clamp(viewPosMouse.x, (-5f), 5f);
-        viewPosMouse.z = Mathf.Clamp(viewPosMouse.z, (-7f), 15f);
+        Vector3 viewPosMouse = movementObject.transform.position;
+        viewPosMouse.x = Mathf.Clamp(viewPosMouse.x, (transform.position.x - 1f), transform.position.x +1f);
+        viewPosMouse.z = Mathf.Clamp(viewPosMouse.z, (transform.position.z - 1f), transform.position.z+ 1f);
         viewPosMouse.y = Mathf.Clamp(viewPosMouse.y, 0, 0);
-        mousePosition.transform.position = viewPosMouse;
+        movementObject.transform.position = viewPosMouse;
     }
 }
