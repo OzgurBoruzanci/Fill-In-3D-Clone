@@ -2,38 +2,41 @@ using Newtonsoft.Json.Serialization;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerMoveControl : MonoBehaviour
 {
     float horizontal = 0;
     float vertical = 0;
-    public GameObject movementObject;
-    //GameObject mousePosition;
-    //Vector3 mouseWorldPosition;
-
-    //Transform destination;
+    public float moveSpeed = 0.1f;
+    Vector3 nextPosition;
+    Ray ray;
+    RaycastHit raycastHit;
 
     void Start()
     {
-        //mousePosition = new GameObject("MousePosition");
-        //mousePosition.transform.position= new Vector3(transform.position.x,0,transform.position.z+2);
-        
 
     }
 
     
-    void FixedUpdate()
+
+    private void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0)) 
         {
-            MouseControl();
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Physics.Raycast(ray, out raycastHit);
+            nextPosition = raycastHit.point;
+            nextPosition.y= 0;
+            transform.LookAt(nextPosition);
+            transform.position=Vector3.MoveTowards(transform.position, nextPosition, moveSpeed);
+            
         }
-        transform.LookAt(movementObject.transform);
-    }
-    private void LateUpdate()
-    {
+        if (transform.position== nextPosition)
+        {
+            transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
+        }
         MoveControl();
-        MousePosMoveControl();
     }
 
     void MouseControl()
@@ -42,8 +45,7 @@ public class PlayerMoveControl : MonoBehaviour
         vertical = Input.GetAxis("Mouse Y");
         Vector3 movementDirection = new Vector3(horizontal, 0, vertical);
         movementDirection.Normalize();
-        transform.Translate(movementDirection * 5 * Time.deltaTime, Space.World);
-        
+        transform.Translate(movementDirection * 10 * Time.deltaTime, Space.World);
         //mousePosition.transform.Translate(movementDirection * 20 * Time.deltaTime, Space.World);
 
         //if (movementDirection != Vector3.zero)
@@ -64,13 +66,5 @@ public class PlayerMoveControl : MonoBehaviour
         viewPos.z = Mathf.Clamp(viewPos.z, (-4.65f), 13.6f);
         viewPos.y = Mathf.Clamp(viewPos.y, 0, 0);
         transform.position = viewPos;
-    }
-    void MousePosMoveControl()
-    {
-        Vector3 viewPosMouse = movementObject.transform.position;
-        viewPosMouse.x = Mathf.Clamp(viewPosMouse.x, (transform.position.x - 1f), transform.position.x +1f);
-        viewPosMouse.z = Mathf.Clamp(viewPosMouse.z, (transform.position.z - 1f), transform.position.z+ 1f);
-        viewPosMouse.y = Mathf.Clamp(viewPosMouse.y, 0, 0);
-        movementObject.transform.position = viewPosMouse;
     }
 }
