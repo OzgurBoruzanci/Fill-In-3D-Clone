@@ -62,8 +62,8 @@ public class PlayerMoveControl : MonoBehaviour
     void MoveControl()
     {
         Vector3 viewPos = transform.position;
-        viewPos.x = Mathf.Clamp(viewPos.x, (-3.7f), 3.7f);
-        viewPos.z = Mathf.Clamp(viewPos.z, (-4.65f), 13.6f);
+        viewPos.x = Mathf.Clamp(viewPos.x, (-36.8f), 36.8f);
+        viewPos.z = Mathf.Clamp(viewPos.z, (-42.5f), 138.2f);
         viewPos.y = Mathf.Clamp(viewPos.y, 0, 0);
         transform.position = viewPos;
     }
