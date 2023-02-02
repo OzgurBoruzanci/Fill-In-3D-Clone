@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.PlayerSettings;
 
-public class SpritesControl : MonoBehaviour
+public class ImageObjectCreator : MonoBehaviour
 {
     [SerializeField]
     private Texture2D image;
@@ -27,8 +27,8 @@ public class SpritesControl : MonoBehaviour
     {
         imageObjectList = new List<GameObject>();
         greyImageObjectList = new List<GameObject>();
-        worldX=image.width;
-        worldZ=image.height;
+        worldX = image.width;
+        worldZ = image.height;
 
         pixels = image.GetPixels32();
 
@@ -69,8 +69,8 @@ public class SpritesControl : MonoBehaviour
     {
         for (int i = 0; i < imageObjectList.Count; i++)
         {
-            imageObjectList[i].transform.position = new Vector3(imageObjectList[i].transform.position.x, imageObjectList[i].transform.position.y+0.01f, imageObjectList[i].transform.position.z+20);
-            imageObjectList[i].GetComponent<MeshRenderer>().enabled= false;
+            imageObjectList[i].transform.position = new Vector3(imageObjectList[i].transform.position.x, imageObjectList[i].transform.position.y /*+ 0.01f*/, imageObjectList[i].transform.position.z + 20);
+            imageObjectList[i].GetComponent<MeshRenderer>().enabled = false;
             imageObjectList[i].AddComponent<ImageObjectControl>();
         }
     }
