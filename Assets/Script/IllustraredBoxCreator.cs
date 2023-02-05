@@ -14,7 +14,7 @@ public class IllustraredBoxCreator : MonoBehaviour
     int worldX;
     int worldZ;
     int counter = 0;
-    float xPos = -6;
+    float xPos = -12;
     float yPos = 0.5f;
     float zPos = -23;
 
@@ -36,6 +36,7 @@ public class IllustraredBoxCreator : MonoBehaviour
         ImageBoxControl();
         ImageBoxColorControl();
         ImageBoxPosition();
+
     }
 
     void CreateImageBox()
@@ -67,8 +68,10 @@ public class IllustraredBoxCreator : MonoBehaviour
         for (int i = 0; i < imageBoxList.Count; i++)
         {
             imageBoxList[i].transform.position = new Vector3(imageBoxList[i].transform.position.x, imageBoxList[i].transform.position.y, imageBoxList[i].transform.position.z - 20);
+            imageBoxList[i].AddComponent<ImageBoxController>();
             imageBoxList[i].AddComponent<Rigidbody>();
-            imageBoxList[i].GetComponent<Rigidbody>().mass = 0f;
+            imageBoxList[i].GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            imageBoxList[i].GetComponent<Rigidbody>().mass = 0.25f;
             imageBoxList[i].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         }
     }
@@ -76,36 +79,42 @@ public class IllustraredBoxCreator : MonoBehaviour
     void ImageBoxPosition()
     {
         #region stack
-        //for (int i = 0; i < imageBoxList.Count; i++)
-        //{
-        //    imageBoxList[i].transform.position = new Vector3(xPos, yPos, zPos);
-        //    xPos++;
-        //    if (xPos == 4)
-        //    {
-        //        xPos = -6;
-        //        yPos++;
-        //        if (yPos == 6.5f)
-        //        {
-        //            yPos = 0.5f;
-        //            zPos++;
-        //        }
-        //    }
-        //}
+        for (int i = 0; i < imageBoxList.Count; i++)
+        {
+            if (imageBoxList[i].GetComponent<MeshRenderer>().material.color == UnityEngine.Color.gray)
+            {
+                imageBoxList[i].transform.position = new Vector3(xPos, yPos, zPos);
+                xPos++;
+                if (xPos == 3)
+                {
+                    xPos = -6;
+                    yPos++;
+                    if (yPos == 10.5f)
+                    {
+                        yPos = 0.5f;
+                        zPos++;
+                    }
+                }
+            }
+        }
         #endregion
 
         #region in-line
         //for (int i = 0; i < imageBoxList.Count; i++)
         //{
-        //    imageBoxList[i].transform.position = new Vector3(xPos, yPos, zPos);
-        //    zPos++;
-        //    if (zPos == 5)
+        //    if (imageBoxList[i].GetComponent<MeshRenderer>().material.color == UnityEngine.Color.gray)
         //    {
-        //        zPos = -23;
-        //        xPos=xPos+2;
-        //        if (xPos == 6f)
+        //        imageBoxList[i].transform.position = new Vector3(xPos, yPos, zPos);
+        //        zPos++;
+        //        if (zPos == -8)
         //        {
-        //            xPos = -6f;
-        //            //zPos++;
+        //            zPos = -23;
+        //            xPos = xPos + 4;
+        //            if (xPos <= 12.5f && xPos>=11.5f)
+        //            {
+        //                xPos = -6f;
+        //                yPos++;
+        //            }
         //        }
         //    }
         //}
@@ -119,6 +128,10 @@ public class IllustraredBoxCreator : MonoBehaviour
             if (imageBoxList[i].GetComponent<Renderer>().material.color == UnityEngine.Color.black)
             {
                 Destroy(imageBoxList[i]);
+            }
+            else
+            {
+                imageBoxList[i].GetComponent<MeshRenderer>().material.color = UnityEngine.Color.gray;
             }
         }
     }

@@ -35,7 +35,7 @@ public class ImageObjectCreator : MonoBehaviour
         CreateCloneImage();
         CloneImageControl();
         InstantiateImageColorControl();
-        GreyImagePosition();
+        GreyImageControl();
     }
 
     void CreateCloneImage()
@@ -69,16 +69,17 @@ public class ImageObjectCreator : MonoBehaviour
     {
         for (int i = 0; i < imageObjectList.Count; i++)
         {
-            imageObjectList[i].transform.position = new Vector3(imageObjectList[i].transform.position.x, imageObjectList[i].transform.position.y /*+ 0.01f*/, imageObjectList[i].transform.position.z + 20);
+            imageObjectList[i].transform.position = new Vector3(imageObjectList[i].transform.position.x, imageObjectList[i].transform.position.y + 0.0001f, imageObjectList[i].transform.position.z + 17);
             imageObjectList[i].GetComponent<MeshRenderer>().enabled = false;
             imageObjectList[i].AddComponent<ImageObjectControl>();
         }
     }
-    void GreyImagePosition()
+    void GreyImageControl()
     {
         for (int i = 0; i < greyImageObjectList.Count; i++)
         {
-            greyImageObjectList[i].transform.position = new Vector3(greyImageObjectList[i].transform.position.x, greyImageObjectList[i].transform.position.y, greyImageObjectList[i].transform.position.z + 20);
+            greyImageObjectList[i].transform.position = new Vector3(greyImageObjectList[i].transform.position.x, greyImageObjectList[i].transform.position.y, greyImageObjectList[i].transform.position.z + 17);
+            greyImageObjectList[i].GetComponent<Collider>().enabled = false;
         }
     }
 
