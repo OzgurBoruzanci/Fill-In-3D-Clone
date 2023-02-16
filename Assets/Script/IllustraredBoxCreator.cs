@@ -36,7 +36,6 @@ public class IllustraredBoxCreator : MonoBehaviour
         ImageBoxControl();
         ImageBoxColorControl();
         ImageBoxPosition();
-
     }
 
     void CreateImageBox()
@@ -71,8 +70,8 @@ public class IllustraredBoxCreator : MonoBehaviour
             imageBoxList[i].AddComponent<ImageBoxController>();
             imageBoxList[i].AddComponent<Rigidbody>();
             imageBoxList[i].GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            imageBoxList[i].GetComponent<Rigidbody>().mass = 0.25f;
-            imageBoxList[i].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            imageBoxList[i].GetComponent<Rigidbody>().mass = 0.5f;
+            //imageBoxList[i].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         }
     }
 
@@ -81,19 +80,16 @@ public class IllustraredBoxCreator : MonoBehaviour
         #region stack
         for (int i = 0; i < imageBoxList.Count; i++)
         {
-            if (imageBoxList[i].GetComponent<MeshRenderer>().material.color == UnityEngine.Color.gray)
+            imageBoxList[i].transform.position = new Vector3(xPos, yPos, zPos);
+            xPos+=2;
+            if (xPos >= 3)
             {
-                imageBoxList[i].transform.position = new Vector3(xPos, yPos, zPos);
-                xPos++;
-                if (xPos == 3)
+                xPos = -6;
+                yPos++;
+                if (yPos >= 10.5f)
                 {
-                    xPos = -6;
-                    yPos++;
-                    if (yPos == 10.5f)
-                    {
-                        yPos = 0.5f;
-                        zPos++;
-                    }
+                    yPos = 0.5f;
+                    zPos++;
                 }
             }
         }
@@ -102,19 +98,16 @@ public class IllustraredBoxCreator : MonoBehaviour
         #region in-line
         //for (int i = 0; i < imageBoxList.Count; i++)
         //{
-        //    if (imageBoxList[i].GetComponent<MeshRenderer>().material.color == UnityEngine.Color.gray)
+        //    imageBoxList[i].transform.position = new Vector3(xPos, yPos, zPos);
+        //    zPos++;
+        //    if (zPos == -8)
         //    {
-        //        imageBoxList[i].transform.position = new Vector3(xPos, yPos, zPos);
-        //        zPos++;
-        //        if (zPos == -8)
+        //        zPos = -23;
+        //        xPos = xPos + 4;
+        //        if (xPos <= 12.5f && xPos >= 11.5f)
         //        {
-        //            zPos = -23;
-        //            xPos = xPos + 4;
-        //            if (xPos <= 12.5f && xPos>=11.5f)
-        //            {
-        //                xPos = -6f;
-        //                yPos++;
-        //            }
+        //            xPos = -6f;
+        //            yPos++;
         //        }
         //    }
         //}
@@ -125,14 +118,7 @@ public class IllustraredBoxCreator : MonoBehaviour
     {
         for (int i = 0; i < imageBoxList.Count; i++)
         {
-            if (imageBoxList[i].GetComponent<Renderer>().material.color == UnityEngine.Color.black)
-            {
-                Destroy(imageBoxList[i]);
-            }
-            else
-            {
-                imageBoxList[i].GetComponent<MeshRenderer>().material.color = UnityEngine.Color.gray;
-            }
+            imageBoxList[i].GetComponent<MeshRenderer>().material.color = UnityEngine.Color.gray;
         }
     }
 }

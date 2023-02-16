@@ -34,8 +34,8 @@ public class ImageObjectCreator : MonoBehaviour
 
         CreateCloneImage();
         CloneImageControl();
-        InstantiateImageColorControl();
-        GreyImageControl();
+        //InstantiateImageColorControl();
+        //GreyImageControl();
     }
 
     void CreateCloneImage()
@@ -52,11 +52,11 @@ public class ImageObjectCreator : MonoBehaviour
                 spawnPositions[counter] = currentSpawnPosition;
                 currentSpawnPosition.x++;
                 GameObject cloneImage = Instantiate(imageObject, spawnPositions[counter], Quaternion.identity);
-                GameObject cloneImageGrey = Instantiate(imageObject, spawnPositions[counter], Quaternion.identity);
+                //GameObject cloneImageGrey = Instantiate(imageObject, spawnPositions[counter], Quaternion.identity);
                 imageObjectList.Add(cloneImage);
-                greyImageObjectList.Add(cloneImageGrey);
+                //greyImageObjectList.Add(cloneImageGrey);
                 cloneImage.transform.parent = transform;
-                cloneImageGrey.transform.parent = transform;
+                //cloneImageGrey.transform.parent = transform;
                 imageObjectList[counter].GetComponent<Renderer>().material.color = new UnityEngine.Color(pixelColor.r, pixelColor.g, pixelColor.b);
                 counter++;
             }
@@ -69,7 +69,7 @@ public class ImageObjectCreator : MonoBehaviour
     {
         for (int i = 0; i < imageObjectList.Count; i++)
         {
-            imageObjectList[i].transform.position = new Vector3(imageObjectList[i].transform.position.x, imageObjectList[i].transform.position.y + 0.0001f, imageObjectList[i].transform.position.z + 17);
+            imageObjectList[i].transform.position = new Vector3(imageObjectList[i].transform.position.x, imageObjectList[i].transform.position.y/* + 0.0001f*/, imageObjectList[i].transform.position.z + 17);
             imageObjectList[i].GetComponent<MeshRenderer>().enabled = false;
             imageObjectList[i].AddComponent<ImageObjectControl>();
         }
@@ -90,7 +90,7 @@ public class ImageObjectCreator : MonoBehaviour
             if (imageObjectList[i].GetComponent<Renderer>().material.color == UnityEngine.Color.black)
             {
                 Destroy(imageObjectList[i]);
-                Destroy(greyImageObjectList[i]);
+                //Destroy(greyImageObjectList[i]);
             }
         }
     }

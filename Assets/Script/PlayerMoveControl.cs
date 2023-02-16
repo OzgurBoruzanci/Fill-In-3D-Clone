@@ -39,5 +39,11 @@ public class PlayerMoveControl : MonoBehaviour
 
             }
         }
+        else /*if (Input.GetMouseButtonUp(0))*/
+        {
+            
+            rigidBody.velocity= (transform.position).normalized * 0.5f;
+            transform.forward = Vector3.Lerp(transform.forward, (transform.position).normalized, 0 );
+        }
     }
 }
