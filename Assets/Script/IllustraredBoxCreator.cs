@@ -14,15 +14,29 @@ public class IllustraredBoxCreator : MonoBehaviour
     int worldX;
     int worldZ;
     int counter = 0;
-    float xPos = -12;
-    float yPos = 0.5f;
-    float zPos = -23;
+    float xPos = -2.5f;
+    float yPos = 0.1f;
+    float zPos = -10f;
 
     Color32[] pixels;
     List<GameObject> imageBoxList;
     Vector3[] spawnPositions;
     Vector3 startingSpawnPosition;
     Vector3 currentSpawnPosition;
+
+    private void OnEnable()
+    {
+        EventManager.GameFinishControl += GameFinishControl;
+    }
+    private void OnDisable()
+    {
+        EventManager.GameFinishControl -= GameFinishControl;
+    }
+
+    void GameFinishControl()
+    {
+        
+    }
 
     void Start()
     {
@@ -37,7 +51,13 @@ public class IllustraredBoxCreator : MonoBehaviour
         ImageBoxColorControl();
         ImageBoxPosition();
     }
-
+    private void Update()
+    {
+        if (transform.childCount==0)
+        {
+            EventManager.GameFinishControl();
+        }
+    }
     void CreateImageBox()
     {
         spawnPositions = new Vector3[pixels.Length];
@@ -51,7 +71,11 @@ public class IllustraredBoxCreator : MonoBehaviour
                 UnityEngine.Color pixelColor = image.GetPixel(x, y);
                 spawnPositions[counter] = currentSpawnPosition;
                 currentSpawnPosition.x++;
-                GameObject cloneBox = Instantiate(imageBox, spawnPositions[counter], Quaternion.identity);
+                if (pixelColor.a == 0)
+                {
+                    continue;
+                }
+                GameObject cloneBox = Instantiate(imageBox, spawnPositions[counter]/4, Quaternion.identity);
                 imageBoxList.Add(cloneBox);
                 cloneBox.transform.parent = transform;
                 imageBoxList[counter].GetComponent<Renderer>().material.color = new UnityEngine.Color(pixelColor.r, pixelColor.g, pixelColor.b);
@@ -66,13 +90,14 @@ public class IllustraredBoxCreator : MonoBehaviour
     {
         for (int i = 0; i < imageBoxList.Count; i++)
         {
-            imageBoxList[i].transform.position = new Vector3(imageBoxList[i].transform.position.x, imageBoxList[i].transform.position.y, imageBoxList[i].transform.position.z - 20);
+            imageBoxList[i].transform.position = new Vector3(imageBoxList[i].transform.position.x, imageBoxList[i].transform.position.y, imageBoxList[i].transform.position.z - 5);
             imageBoxList[i].AddComponent<ImageBoxController>();
             imageBoxList[i].AddComponent<Rigidbody>();
             imageBoxList[i].GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            imageBoxList[i].GetComponent<Rigidbody>().mass = 0.5f;
+            imageBoxList[i].GetComponent<Rigidbody>().mass = 0.1f;
             //imageBoxList[i].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         }
+        Debug.Log(imageBoxList.Count + "  Boxs");
     }
 
     void ImageBoxPosition()
@@ -81,15 +106,15 @@ public class IllustraredBoxCreator : MonoBehaviour
         for (int i = 0; i < imageBoxList.Count; i++)
         {
             imageBoxList[i].transform.position = new Vector3(xPos, yPos, zPos);
-            xPos+=2;
-            if (xPos >= 3)
+            xPos+=0.4f;
+            if (xPos >= 2)
             {
-                xPos = -6;
-                yPos++;
-                if (yPos >= 10.5f)
+                xPos = -2.5f;
+                yPos += 0.2f;
+                if (yPos >= 2.1f)
                 {
                     yPos = 0.5f;
-                    zPos++;
+                    zPos += 0.2f;
                 }
             }
         }

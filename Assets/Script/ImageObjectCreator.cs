@@ -51,7 +51,11 @@ public class ImageObjectCreator : MonoBehaviour
                 UnityEngine.Color pixelColor = image.GetPixel(x, y);
                 spawnPositions[counter] = currentSpawnPosition;
                 currentSpawnPosition.x++;
-                GameObject cloneImage = Instantiate(imageObject, spawnPositions[counter], Quaternion.identity);
+                if (pixelColor.a==0)
+                {
+                    continue;
+                }
+                GameObject cloneImage = Instantiate(imageObject, spawnPositions[counter]/4, Quaternion.identity);
                 //GameObject cloneImageGrey = Instantiate(imageObject, spawnPositions[counter], Quaternion.identity);
                 imageObjectList.Add(cloneImage);
                 //greyImageObjectList.Add(cloneImageGrey);
@@ -63,14 +67,15 @@ public class ImageObjectCreator : MonoBehaviour
             currentSpawnPosition.x = startingSpawnPosition.x;
             currentSpawnPosition.z++;
         }
+        Debug.Log(imageObjectList.Count+"  ImageObject");
     }
 
     void CloneImageControl()
     {
         for (int i = 0; i < imageObjectList.Count; i++)
         {
-            imageObjectList[i].transform.position = new Vector3(imageObjectList[i].transform.position.x, imageObjectList[i].transform.position.y/* + 0.0001f*/, imageObjectList[i].transform.position.z + 17);
-            imageObjectList[i].GetComponent<MeshRenderer>().enabled = false;
+            imageObjectList[i].transform.position = new Vector3(imageObjectList[i].transform.position.x, imageObjectList[i].transform.position.y+0.085f, imageObjectList[i].transform.position.z-1.5f /*+ 17*/);
+            //imageObjectList[i].GetComponent<MeshRenderer>().enabled = false;
             imageObjectList[i].AddComponent<ImageObjectControl>();
         }
     }

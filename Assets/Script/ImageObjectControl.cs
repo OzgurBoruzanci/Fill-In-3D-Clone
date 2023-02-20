@@ -5,17 +5,27 @@ using UnityEngine;
 public class ImageObjectControl : MonoBehaviour
 {
     public bool isCollisionActive = true;
+    Color pixelColor;
 
-    private void OnCollisionEnter(Collision collision)
+    private void Awake()
     {
-        if (collision.gameObject.tag != "Player")
+        pixelColor=this.GetComponent<Renderer>().material.color;
+    }
+    private void Start()
+    {
+        this.GetComponent<Renderer>().material.color = Color.gray;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag != "Player")
         {
-            if (collision.gameObject.GetComponent<ImageBoxController>() && isCollisionActive && collision.gameObject.GetComponent<ImageBoxController>().isCollision)
+            if (other.gameObject.GetComponent<ImageBoxController>() && isCollisionActive && other.gameObject.GetComponent<ImageBoxController>().isCollision)
             {
-                collision.gameObject.GetComponent<ImageBoxController>().isCollision = false;
+                this.GetComponent<Renderer>().material.color=pixelColor;
+                other.gameObject.GetComponent<ImageBoxController>().isCollision = false;
                 isCollisionActive = false;
-                transform.GetComponent<MeshRenderer>().enabled = true;
-                collision.gameObject.SetActive(false);
+                //transform.GetComponent<MeshRenderer>().enabled = true;
+                Destroy(other.gameObject);
             }
         }
     }
